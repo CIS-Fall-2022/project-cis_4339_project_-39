@@ -1,0 +1,36 @@
+
+PERSONAL DETAILS
+{
+	"FirstName": [String],
+	"MiddleName": [String],
+	"LastName": [String],
+	"Email": [String],
+	"PhoneNumber": [Number],
+	"AltPhoneNumber": [Number]
+	"Address": [
+		{
+			"AddressLine1": [String],
+			"AddressLine2": [String],
+			"City": [String],
+			"County": [String],
+			"ZipCode": [Number]
+		}
+	]
+}
+
+EVENT DETAILS
+{
+	"EventName": [String],
+	"Date": [Date],
+	"Description": [String],
+	"ServicesOffered": [String], (Check)
+	"Address": [
+		{
+			"AddressLine1": [String],
+			"AddressLine2": [String],
+			"City": [String],
+			"County": [String],
+			"ZipCode": [Number]
+		}
+	]
+}
