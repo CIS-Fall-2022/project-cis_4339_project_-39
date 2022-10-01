@@ -1,10 +1,14 @@
 const uuid = require('uuid');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-//stop playin wit me
+
 //collection for intakeData
 let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
+    orgId: {
+        type: String,
+        required: true
+    },
     firstName: {
         type: String,
         require: true
@@ -49,6 +53,10 @@ let primaryDataSchema = new Schema({
 //collection for eventData
 let eventDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
+    orgId: {
+        type: String,
+        required: true
+    },
     eventName: {
         type: String,
         require: true
