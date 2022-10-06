@@ -15,7 +15,7 @@ app.use(cors({
 
 //sets up mongoose for the mongoDB connection
 mongoose
-    .connect(process.env.MONGO_URL)  
+  .connect('mongodb+srv://aale:4339password@project.ckpvdbb.mongodb.net/project')
   .then(() => {
     console.log("Database connection Success!");
   })
@@ -24,7 +24,7 @@ mongoose
   });
 
 //declare port number for the api
-const PORT = process.env.PORT || 27017;
+const PORT = process.env.PORT || 3000;
 
 //setup
 app.use(express.json());
@@ -38,42 +38,6 @@ const eventsDataRoute  = require('./routes/eventsData');
 app.use('/primaryData', primaryDataRoute);
 app.use('/eventData', eventsDataRoute)
 
-//Delete events Data
-app.delete("/deleteEvents/:id", (req, res, next) => {
-  //mongoose will use studentID of document
-  eventdata.findOneAndRemove(
-    { _id: req.params.id },
-    (error, data) => {
-      if (error) {
-        return next(error);
-      } else {
-        res.status(200).json({
-          msg: data,
-        });
-        res.send("Data of the Events has been deleted");
-      }
-    }
-  );
-});
-
-//Deletes Primary Data
-app.delete("/deleteClinet/:id", (req, res, next) => {
-  //mongoose will use studentID of document
-  primaryData.findOneAndRemove(
-    { _id: req.params.id },
-    (error, data) => {
-      if (error) {
-        return next(error);
-      } else {
-        res.status(200).json({
-          msg: data,
-        });
-        res.send("Primary Data has been deleted");
-      }
-    }
-  );
-});
-
 app.listen(PORT, () => {
   console.log("Server started listening on port : ", PORT);
 });
@@ -86,5 +50,3 @@ app.use(function (err, req, res, next) {
     err.statusCode = 500;
   res.status(err.statusCode).send(err.message);
 });
-
-//nodemon app.js
