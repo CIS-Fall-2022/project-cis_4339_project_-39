@@ -5,7 +5,7 @@ const router = express.Router();
 let { eventdata } = require("../models/models"); 
 
 //GET all entries
-router.get("/", (req, res, next) => { 
+router.get("/GetEventsData", (req, res, next) => { 
     eventdata.find( 
         (error, data) => {
             if (error) {
@@ -18,7 +18,7 @@ router.get("/", (req, res, next) => {
 });
 
 //GET single entry by ID
-router.get("/id/:id", (req, res, next) => { 
+router.get("/EventDataID/:id", (req, res, next) => { 
     eventdata.find({ _id: req.params.id }, (error, data) => {
         if (error) {
             return next(error)
@@ -30,7 +30,7 @@ router.get("/id/:id", (req, res, next) => {
 
 //GET entries based on search query
 //Ex: '...?eventName=Food&searchBy=name' 
-router.get("/search/", (req, res, next) => { 
+router.get("/searchevent/", (req, res, next) => { 
     let dbQuery = "";
     if (req.query["searchBy"] === 'name') {
         dbQuery = { eventName: { $regex: `^${req.query["eventName"]}`, $options: "i" } }
@@ -66,7 +66,7 @@ router.get("/client/:id", (req, res, next) => {
 });
 
 //POST
-router.post("/", (req, res, next) => { 
+router.post("/InputEventData", (req, res, next) => { 
     eventdata.create( 
         req.body, 
         (error, data) => { 
@@ -79,8 +79,13 @@ router.post("/", (req, res, next) => {
     );
 });
 
+
+
+
+
+
 //PUT
-router.put("/:id", (req, res, next) => {
+router.put("/UpdateEventsData:id", (req, res, next) => {
     eventdata.findOneAndUpdate(
         { _id: req.params.id },
         req.body,

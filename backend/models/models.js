@@ -4,12 +4,13 @@ const Schema = mongoose.Schema;
 
 //collection for intakeData
 let primaryDataSchema = new Schema({
-    _id: { type: String, default: uuid.v1 },
+    //_id: { type: String, default: uuid.v1 },
+     //},
     firstName: {
         type: String,
         require: true
-    },
-    middleName: {
+  }
+ /*     middleName: {
         type: String,
     },
     lastName: {
@@ -26,9 +27,7 @@ let primaryDataSchema = new Schema({
     address: {
         line1: {
             type: String
-        },
-        line2: {
-            type: String,
+
         },
         city: {
             type: String,
@@ -40,7 +39,7 @@ let primaryDataSchema = new Schema({
         zip: {
             type: String,
         }
-    }
+      }*/ 
 }, {
     collection: 'primaryData',
     timestamps: true
