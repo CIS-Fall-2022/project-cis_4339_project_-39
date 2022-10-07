@@ -8,6 +8,10 @@ require("dotenv").config();
 //creates a new instance of express application
 const app = express();
 
+let EventModel = require('./models/events');
+
+// let BookingModel = require('./Exam1/models/bookings')
+
 // add cors header to the server
 app.use(cors({
   origin: '*'
@@ -30,13 +34,33 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(morgan("dev"));
 
+app.post('/create-event', (req, res, next) => { 
+  EventModel.create(req.body, (error, data) => {
+    if (error) {
+      console.log('Something went wrong');
+    } else {
+      res.send('event is added to the database');
+    }
+  });
+});
+
+app.get('/create-event', (req, res, next) => { 
+  EventModel.find(req.body, (error, data) => {
+    if (error) {
+      console.log('Something went wrong');
+    } else {
+      res.json(data);
+    }
+  });
+});
+
 //import routes
-const primaryDataRoute  = require('./routes/primaryData');
-const eventsDataRoute  = require('./routes/eventsData');
+// const primaryDataRoute  = require('./routes/primaryData');
+// const eventsDataRoute  = require('./routes/eventsData');
 
 //setup middle ware for routes
-app.use('/primaryData', primaryDataRoute);
-app.use('/eventData', eventsDataRoute)
+// app.use('/primaryData', primaryDataRoute);
+// app.use('/eventData', eventsDataRoute)
 
 app.listen(PORT, () => {
   console.log("Server started listening on port : ", PORT);
