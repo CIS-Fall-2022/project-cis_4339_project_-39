@@ -6,7 +6,7 @@ let { primarydata } = require("../models/models");
 let { eventdata } = require("../models/models"); 
 
 //GET all entries
-router.get("/GetAllPrimaryData", (req, res, next) => { 
+router.get("/", (req, res, next) => { 
     primarydata.find( 
         (error, data) => {
             if (error) {
@@ -19,7 +19,7 @@ router.get("/GetAllPrimaryData", (req, res, next) => {
 });
 
 //GET single entry by ID
-router.get("/Clinetid/:id", (req, res, next) => {
+router.get("/id/:id", (req, res, next) => {
     primarydata.find( 
         { _id: req.params.id }, 
         (error, data) => {
@@ -34,7 +34,7 @@ router.get("/Clinetid/:id", (req, res, next) => {
 
 //GET entries based on search query
 //Ex: '...?firstName=Bob&lastName=&searchBy=name' 
-router.get("/searchquery/", (req, res, next) => { 
+router.get("/search/", (req, res, next) => { 
     let dbQuery = "";
     if (req.query["searchBy"] === 'name') {
         dbQuery = { firstName: { $regex: `^${req.query["firstName"]}`, $options: "i" }, lastName: { $regex: `^${req.query["lastName"]}`, $options: "i" } }
@@ -56,12 +56,12 @@ router.get("/searchquery/", (req, res, next) => {
 });
 
 //GET events for a single client
-router.get("/getdata/:id", (req, res, next) => { 
-    
+router.get("/events/:id", (req, res, next) => { 
+
 });
 
 //POST
-router.post('/AddPrimaryData', (req, res, next) => { 
+router.post("/", (req, res, next) => { 
     primarydata.create( 
         req.body,
         (error, data) => { 
@@ -78,7 +78,7 @@ router.post('/AddPrimaryData', (req, res, next) => {
 });
 
 //PUT update (make sure req body doesn't have the id)
-router.put("/updatePrimaryData:id", (req, res, next) => { 
+router.put("/:id", (req, res, next) => { 
     primarydata.findOneAndUpdate( 
         { _id: req.params.id }, 
         req.body,
