@@ -10,7 +10,7 @@ const app = express();
 
 let EventModel = require('./models/events');
 
-// let BookingModel = require('./Exam1/models/bookings')
+let ClientModel = require('./models/clients');
 
 // add cors header to the server
 app.use(cors({
@@ -46,6 +46,26 @@ app.post('/create-event', (req, res, next) => {
 
 app.get('/create-event', (req, res, next) => { 
   EventModel.find(req.body, (error, data) => {
+    if (error) {
+      console.log('Something went wrong');
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+app.post('/client', (req, res, next) => { 
+  ClientModel.create(req.body, (error, data) => {
+    if (error) {
+      console.log('Something went wrong');
+    } else {
+      res.send('client is added to the database');
+    }
+  });
+});
+
+app.get('/client', (req, res, next) => { 
+  ClientModel.find(req.body, (error, data) => {
     if (error) {
       console.log('Something went wrong');
     } else {
