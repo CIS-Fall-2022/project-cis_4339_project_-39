@@ -18,19 +18,6 @@ router.get("/", (req, res, next) => {
     ).sort({ 'updatedAt': -1 }).limit(10);
 });
 
-//GET single entry by ID
-router.get("/id/:id", (req, res, next) => {
-    primarydata.find( 
-        { _id: req.params.id }, 
-        (error, data) => {
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
-            }
-        }
-    );
-});
 
 //GET entries based on search query
 //Ex: '...?firstName=Bob&lastName=&searchBy=name' 
@@ -64,8 +51,9 @@ router.get("/events/:id", (req, res, next) => {
     
 });
 
-//POST
+//POST an entree
 router.post("/", (req, res, next) => { 
+    console.log(req)
     primarydata.create( 
         req.body,
         (error, data) => { 
@@ -109,5 +97,7 @@ router.delete("/:id/:org", (req, res, next) => {
         }
     ).sort({ 'updatedAt': -1 }).limit(10);
 });
+
+
 
 module.exports = router;

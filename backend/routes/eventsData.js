@@ -4,6 +4,52 @@ const router = express.Router();
 //importing data model schemas
 let { eventdata } = require("../models/models"); 
 
+// DELETE event
+router.delete("delete/:id", (req, res, next) => {
+    eventdata.findOneAndDelete(
+        { _id: req.params.id },
+        req.body,
+        (error, data) => {
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    );
+});
+
+// DELETE attendee from an event
+router.delete("/:id", (req, res, next) => {
+    //only add attendee if not yet signed uo
+    eventdata.find( 
+        { _id: req.params.id, attendees: req.body.attendee }, 
+        (error, data) => { 
+            if (error) {
+                return next(error);
+            } else {
+                if (data.length == 0) {
+                    eventdata.findOneAndDelete(
+                        { _id: req.params.id }, 
+                        { $push: { attendees: req.body.attendee } },
+                        (error, data) => {
+                            if (error) {
+                                consol
+                                return next(error);
+                            } else {
+                                res.json(data);
+                            }
+                        }
+                    );
+                }
+                
+            }
+        }
+    );
+    
+});
+
+
 //GET all entries
 router.get("/", (req, res, next) => { 
     eventdata.find( 
@@ -94,9 +140,11 @@ router.put("/:id", (req, res, next) => {
     );
 });
 
+
+
 //PUT add attendee to event
 router.put("/addAttendee/:id", (req, res, next) => {
-    //only add attendee if not yet signed uo
+    //this will only add attendee if not yet signed up
     eventdata.find( 
         { _id: req.params.id, attendees: req.body.attendee }, 
         (error, data) => { 
@@ -123,5 +171,6 @@ router.put("/addAttendee/:id", (req, res, next) => {
     );
     
 });
+
 
 module.exports = router;
