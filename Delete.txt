@@ -1,0 +1,43 @@
+
+
+//delete Primary Data
+router.delete("/DeletePrimaryData", (req, res, next) => {
+    primarydata.findOneAndRemove(
+      { _id: req.params.id },
+      (error, data) => {
+        if (error) {
+          return next(error);
+        } else {
+          res.status(200).json({
+            msg: data,
+          });
+          res.send("Primary Data has been deleted");
+        }
+      }
+    );
+  });
+
+
+
+
+
+
+//delete Event Details
+router.delete("/DeleteEventDetails", (req, res, next) => {
+    eventdata.findOneAndRemove(
+      { _id: req.params.id },
+      (error, data) => {
+        if (error) {
+          return next(error);
+        } else {
+          res.status(200).json({
+            msg: data,
+          });
+          res.send("Event Data has been deleted");
+        }
+      }
+    );
+  });
+
+
+
