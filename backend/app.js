@@ -8,6 +8,10 @@ require("dotenv").config();
 //creates a new instance of express application
 const app = express();
 
+let EventModel = require('./backend/models/events');
+
+// let BookingModel = require('./Exam1/models/bookings')
+
 // add cors header to the server
 app.use(cors({
   origin: '*'
@@ -15,7 +19,7 @@ app.use(cors({
 
 //sets up mongoose for the mongoDB connection
 mongoose
-  .connect(process.env.mongodb+srv://ahl20:<bYU9iMXJ77HRhMjW>@cis4339v1.wpsyg2l.mongodb.net/test
+  .connect(process.env.MONGO_URL
   )
   .then(() => {
     console.log("Database connection Success!");
@@ -30,6 +34,17 @@ const PORT = process.env.PORT || 3000;
 //setup
 app.use(express.json());
 app.use(morgan("dev"));
+
+app.post('/create-event', (req, res, next) => { 
+  EventModel.create(req.body, (error, data) => {
+    if (error) {
+      console.log('Something went wrong');
+    } else {
+      res.send('Patron is added to the database');
+    }
+  });
+});
+
 
 //import routes
 const primaryDataRoute  = require('./routes/primaryData');

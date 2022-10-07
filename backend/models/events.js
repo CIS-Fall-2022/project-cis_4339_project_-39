@@ -30,4 +30,4 @@ let eventSchema = new Schema({
     collection: 'events'
 });
 
-module.exports = mongoose.model('event', eventSchema)
+module.exports = mongoose.model('create-event', eventSchema)
