@@ -8,7 +8,7 @@ require("dotenv").config();
 //creates a new instance of express application
 const app = express();
 
-let EventModel = require('./models/events');
+let {EventModel} = require('./models/events');
 
 let ClientModel = require('./models/clients');
 
@@ -52,6 +52,21 @@ app.get('/create-event', (req, res, next) => {
       res.json(data);
     }
   });
+});
+
+app.put("/changeevent/:_id", (req, res, next) => {
+  EventModel.findByIdAndUpdate(
+      req.params._id ,
+      // {$push: {events: req.body.event}},
+      req.body,
+      (error, data) => {
+          if (error) {
+              return next(error);
+          } else {
+              res.json(data);
+          }
+      }
+  );
 });
 
 app.post('/client', (req, res, next) => { 

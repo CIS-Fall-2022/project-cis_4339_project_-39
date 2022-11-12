@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 let eventSchema = new Schema({
     OrgId: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
     EventName: {
         type: String,
@@ -30,4 +29,5 @@ let eventSchema = new Schema({
     collection: 'events'
 });
 
-module.exports = mongoose.model('create-event', eventSchema)
+let EventModel = mongoose.model('events', eventSchema)
+module.exports = {EventModel}
