@@ -5,20 +5,24 @@ const router = express.Router();
 let { eventdata } = require("../models/models"); 
 
 //GET all entries
-router.get("/GetEventsData", (req, res, next) => { 
-    eventdata.find( 
+router.get("/", (req, res, next) => { 
+    eventdata.find()
+    .populate('organization')
+    .sort({ 'updatedAt': -1 })
+    .limit(10).exec( 
         (error, data) => {
+            console.log(data)
             if (error) {
                 return next(error);
             } else {
                 res.json(data);
             }
         }
-    ).sort({ 'updatedAt': -1 }).limit(10);
+    )
 });
 
 //GET single entry by ID
-router.get("/EventDataID/:id", (req, res, next) => { 
+router.get("/id/:id", (req, res, next) => { 
     eventdata.find({ _id: req.params.id }, (error, data) => {
         if (error) {
             return next(error)
@@ -30,7 +34,7 @@ router.get("/EventDataID/:id", (req, res, next) => {
 
 //GET entries based on search query
 //Ex: '...?eventName=Food&searchBy=name' 
-router.get("/searchevent/", (req, res, next) => { 
+router.get("/search/", (req, res, next) => { 
     let dbQuery = "";
     if (req.query["searchBy"] === 'name') {
         dbQuery = { eventName: { $regex: `^${req.query["eventName"]}`, $options: "i" } }
@@ -66,7 +70,7 @@ router.get("/client/:id", (req, res, next) => {
 });
 
 //POST
-router.post("/InputEventData", (req, res, next) => { 
+router.post("/", (req, res, next) => { 
     eventdata.create( 
         req.body, 
         (error, data) => { 
@@ -79,13 +83,8 @@ router.post("/InputEventData", (req, res, next) => {
     );
 });
 
-
-
-
-
-
 //PUT
-router.put("/UpdateEventsData:id", (req, res, next) => {
+router.put("/:id", (req, res, next) => {
     eventdata.findOneAndUpdate(
         { _id: req.params.id },
         req.body,
@@ -102,31 +101,53 @@ router.put("/UpdateEventsData:id", (req, res, next) => {
 //PUT add attendee to event
 router.put("/addAttendee/:id", (req, res, next) => {
     //only add attendee if not yet signed uo
-    eventdata.find( 
-        { _id: req.params.id, attendees: req.body.attendee }, 
-        (error, data) => { 
+    eventdata.updateOne(
+        { _id: req.params.id }, 
+        { $push: { attendees: req.body.attendee } },
+        (error, data) => {
+            console.log(data)
             if (error) {
                 return next(error);
             } else {
-                if (data.length == 0) {
-                    eventdata.updateOne(
-                        { _id: req.params.id }, 
-                        { $push: { attendees: req.body.attendee } },
-                        (error, data) => {
-                            if (error) {
-                                consol
-                                return next(error);
-                            } else {
-                                res.json(data);
-                            }
-                        }
-                    );
-                }
-                
+                res.json(data);
             }
         }
     );
-    
 });
 
+//DELETE
+router.delete("/:id", (req, res, next) => { 
+    eventdata.deleteOne(
+        {_id:req.params.id} ,
+        (error, data) => {
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    )
+});
+ 
+//GET all event past 2 months
+router.get("/totalAttendees", (req, res, next) => { 
+    const currentdate = new Date(Date.now())
+    const currentmonth = currentdate.getMonth()
+    const pastdate = new Date(currentdate)
+    pastdate.setMonth(currentmonth - 2)
+    eventdata.aggregate([
+       {$match: {date:{$gte:pastdate}}}, // filter query
+       {$project: {attendeeSize: {$size: "$attendees"}}},
+       {$group: {_id: null, totalAttendees: {$sum: "$attendeeSize"}}} // project query
+    ]).exec(
+        (error, data) => {
+            console.log(data)
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    )
+});
 module.exports = router;
