@@ -10,6 +10,7 @@ const app = express();
 
 let EventModel = require('./backend/models/events');
 
+
 // let BookingModel = require('./Exam1/models/bookings')
 
 // add cors header to the server
