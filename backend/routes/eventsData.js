@@ -4,52 +4,6 @@ const router = express.Router();
 //importing data model schemas
 let { eventdata } = require("../models/models"); 
 
-// DELETE event
-router.delete("delete/:id", (req, res, next) => {
-    eventdata.findOneAndDelete(
-        { _id: req.params.id },
-        req.body,
-        (error, data) => {
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
-            }
-        }
-    );
-});
-
-// DELETE attendee from an event
-router.delete("/:id", (req, res, next) => {
-    //only add attendee if not yet signed uo
-    eventdata.find( 
-        { _id: req.params.id, attendees: req.body.attendee }, 
-        (error, data) => { 
-            if (error) {
-                return next(error);
-            } else {
-                if (data.length == 0) {
-                    eventdata.findOneAndDelete(
-                        { _id: req.params.id }, 
-                        { $push: { attendees: req.body.attendee } },
-                        (error, data) => {
-                            if (error) {
-                                consol
-                                return next(error);
-                            } else {
-                                res.json(data);
-                            }
-                        }
-                    );
-                }
-                
-            }
-        }
-    );
-    
-});
-
-
 //GET all entries
 router.get("/", (req, res, next) => { 
     eventdata.find( 
@@ -140,37 +94,56 @@ router.put("/:id", (req, res, next) => {
     );
 });
 
-
-
 //PUT add attendee to event
 router.put("/addAttendee/:id", (req, res, next) => {
-    //this will only add attendee if not yet signed up
-    eventdata.find( 
-        { _id: req.params.id, attendees: req.body.attendee }, 
-        (error, data) => { 
+    //only add attendee if not yet signed uo
+    eventdata.updateOne(
+        { _id: req.params.id }, 
+        { $push: { attendees: req.body.attendee } },
+        (error, data) => {
+            console.log(data)
             if (error) {
                 return next(error);
             } else {
-                if (data.length == 0) {
-                    eventdata.updateOne(
-                        { _id: req.params.id }, 
-                        { $push: { attendees: req.body.attendee } },
-                        (error, data) => {
-                            if (error) {
-                                consol
-                                return next(error);
-                            } else {
-                                res.json(data);
-                            }
-                        }
-                    );
-                }
-                
+                res.json(data);
             }
         }
     );
-    
 });
 
-
+//DELETE
+router.delete("/:id", (req, res, next) => { 
+    eventdata.deleteOne(
+        {_id:req.params.id} ,
+        (error, data) => {
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    )
+});
+ 
+//GET all event past 2 months
+router.get("/totalAttendees", (req, res, next) => { 
+    const currentdate = new Date(Date.now())
+    const currentmonth = currentdate.getMonth()
+    const pastdate = new Date(currentdate)
+    pastdate.setMonth(currentmonth - 2)
+    eventdata.aggregate([
+       {$match: {date:{$gte:pastdate}}}, // filter query
+       {$project: {attendeeSize: {$size: "$attendees"}}},
+       {$group: {_id: null, totalAttendees: {$sum: "$attendeeSize"}}} // project query
+    ]).exec(
+        (error, data) => {
+            console.log(data)
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    )
+});
 module.exports = router;
