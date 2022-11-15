@@ -1,19 +1,28 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let eventSchema = new Schema({
+let clientSchema = new Schema({
     OrgId: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
-    EventName: {
+    FirstName: {
         type: String,
         required: true
     },
-    Date: {
-        type: Date
+    MiddleName: {
+        type: String,
+        required: true
     },
-    ServicesOffered: {
+    LastName: {
+        type: String,
+        required: true
+    },
+    Email: {
+        type: String
+    },
+    PhoneNumbers: {
         type: String
     },
     Address: [
@@ -26,8 +35,7 @@ let eventSchema = new Schema({
         }
     ]
   }, {
-    collection: 'events'
+    collection: 'clients'
 });
 
-let EventModel = mongoose.model('events', eventSchema)
-module.exports = {EventModel}
+module.exports = mongoose.model('client', clientSchema)

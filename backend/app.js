@@ -20,8 +20,7 @@ app.use(cors({
 
 //sets up mongoose for the mongoDB connection
 mongoose
-  .connect(process.env.MONGO_URL
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Database connection Success!");
   })
@@ -36,24 +35,15 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.post('/create-event', (req, res, next) => { 
-  EventModel.create(req.body, (error, data) => {
-    if (error) {
-      console.log('Something went wrong');
-    } else {
-      res.send('Patron is added to the database');
-    }
-  });
-});
-
-
 //import routes
 const primaryDataRoute  = require('./routes/primaryData');
 const eventsDataRoute  = require('./routes/eventsData');
+const organizationDataRoute = require('./routes/organizationData');
 
 //setup middle ware for routes
-app.use('/primaryData', primaryDataRoute);
-app.use('/eventData', eventsDataRoute)
+app.use('/primarydata', primaryDataRoute);
+app.use('/eventsData', eventsDataRoute)
+app.use('/organizationData', organizationDataRoute)
 
 app.listen(PORT, () => {
   console.log("Server started listening on port : ", PORT);

@@ -7,26 +7,28 @@ let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
     firstName: {
         type: String,
-        require: true
-    },
-    middleName: {
-        type: String,
-    },
+        required: true
+  },
     lastName: {
         type: String,
         required: true
     },
+    organization: {  
+        type: String,
+        ref: 'organizationData' ,
+        required: true
+}, 
     email: {
         type: String
-    },
+},
     phoneNumbers: {
-        type: Array,
+        type: [String],
         required: true
-    },
+},
     address: {
         line1: {
             type: String
-        },
+        },  
         line2: {
             type: String,
         },
@@ -41,8 +43,9 @@ let primaryDataSchema = new Schema({
             type: String,
         }
     }
-}, {
-    collection: 'primaryData',
+},
+{
+    collection: 'primarydata',
     timestamps: true
 });
 
@@ -51,8 +54,13 @@ let eventDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
     eventName: {
         type: String,
-        require: true
+        required: true
     },
+    organization: {  
+        type: String,
+        ref: 'organizationData' ,
+        required: true
+   },
     services: {
         type: Array
     },
@@ -87,9 +95,20 @@ let eventDataSchema = new Schema({
     collection: 'eventData'
 });
 
+
+let organizationDataSchema = new Schema({
+    _id: { type: String, default: uuid.v1 },
+    organizationName: {
+        type: String,
+        required: true
+    }}, {
+        collection: 'organizationData'
+    });
+
 // create models from mongoose schemas
-const primarydata = mongoose.model('primaryData', primaryDataSchema);
+const primarydata = mongoose.model('primarydata', primaryDataSchema);
 const eventdata = mongoose.model('eventData', eventDataSchema);
+const organizationdata = mongoose.model('organizationData', organizationDataSchema)
 
 // package the models in an object to export 
-module.exports = { primarydata, eventdata }
+module.exports = { primarydata, eventdata, organizationdata }
