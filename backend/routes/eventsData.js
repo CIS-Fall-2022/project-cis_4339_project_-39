@@ -146,4 +146,5 @@ router.get("/totalAttendees", (req, res, next) => {
         }
     )
 });
+
 module.exports = router;
