@@ -7,7 +7,7 @@ let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
     firstName: {
         type: String,
-        require: true
+        required: true
   },
     lastName: {
         type: String,
@@ -16,7 +16,7 @@ let primaryDataSchema = new Schema({
     organization: {  
         type: String,
         ref: 'organizationData' ,
-        require: true
+        required: true
 }, 
     email: {
         type: String
@@ -54,12 +54,12 @@ let eventDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
     eventName: {
         type: String,
-        require: true
+        required: true
     },
     organization: {  
         type: String,
         ref: 'organizationData' ,
-        require: true
+        required: true
    },
     services: {
         type: Array
@@ -100,13 +100,13 @@ let organizationDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
     organizationName: {
         type: String,
-        require: true
+        required: true
     }}, {
         collection: 'organizationData'
     });
 
 // create models from mongoose schemas
-const primarydata = mongoose.model('primaryData', primaryDataSchema);
+const primarydata = mongoose.model('primarydata', primaryDataSchema);
 const eventdata = mongoose.model('eventData', eventDataSchema);
 const organizationdata = mongoose.model('organizationData', organizationDataSchema)
 

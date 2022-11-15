@@ -6,19 +6,15 @@ let { eventdata } = require("../models/models");
 
 //GET all entries
 router.get("/", (req, res, next) => { 
-    eventdata.find()
-    .populate('organization')
-    .sort({ 'updatedAt': -1 })
-    .limit(10).exec( 
+    eventdata.find( 
         (error, data) => {
-            console.log(data)
             if (error) {
                 return next(error);
             } else {
                 res.json(data);
             }
         }
-    )
+    ).sort({ 'updatedAt': -1 }).limit(10);
 });
 
 //GET single entry by ID
