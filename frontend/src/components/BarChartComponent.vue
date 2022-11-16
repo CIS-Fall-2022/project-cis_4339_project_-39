@@ -23,7 +23,7 @@ export default {
         labels: this.label,
         datasets: [
           {
-            label: "Enrollment",
+            label: "Events",
             backgroundColor: "rgba(144,238,144 , 0.9 )",
             data: this.chartData,
           },
@@ -32,7 +32,8 @@ export default {
       options: {
         scales: {
             y: {
-                min: 100
+                min: 0,
+                max: 5
             }
         }
       }

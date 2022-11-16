@@ -76,7 +76,7 @@ export default {
         const url = `http://localhost:3000/eventsData/totalAttendees`;
         const response = await axios.get(url);
         //"re-organizing" - mapping json from the response
-        this.labels = response.data.map((item) => item.course);
+        this.labels = response.data.map((item) => item.eventName);
         this.enrolled = response.data.map((item) => item.enrollment);
       } catch (err) {
         if (err.response) {
