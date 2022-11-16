@@ -39,6 +39,11 @@ const routes = [
         name: 'eventdetails',
         props: true,
         component: () => import('../components/eventDetails.vue')
+    },
+    {
+        path: '/chart',
+        name: 'chart',
+        component: ChartView
     }
 ]
 const router = createRouter({
