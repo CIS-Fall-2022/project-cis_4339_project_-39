@@ -34,7 +34,7 @@ let primaryDataSchema = new Schema({
         },
         city: {
             type: String,
-            required: true
+            // required: true
         },
         county: {
             type: String,

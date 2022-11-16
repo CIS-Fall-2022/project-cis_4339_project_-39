@@ -11,14 +11,19 @@ let clientSchema = new Schema({
         type: String,
         required: true
     },
-    MiddleName: {
-        type: String,
-        required: true
-    },
+    // MiddleName: {
+    //     type: String,
+    //     required: true
+    // },
     LastName: {
         type: String,
         required: true
-    },
+    },    
+    organization: {  
+    type: String,
+    ref: 'organizationData' ,
+    required: true
+    }, 
     Email: {
         type: String
     },

@@ -13,8 +13,8 @@ export default {
     return {
       client: {
         firstName: "",
-        middleName: "",
         lastName: "",
+        organization: "",
         email: "",
         phoneNumbers: [
           {
@@ -38,7 +38,7 @@ export default {
       const isFormCorrect = await this.v$.$validate();
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
-        let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata`;
+        let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData`;
         axios
           .post(apiURL, this.client)
           .then(() => {
@@ -46,15 +46,10 @@ export default {
             this.$router.push("/findclient");
             this.client = {
               firstName: "",
-              middleName: "",
               lastName: "",
+              organization: "",
               email: "",
-              phoneNumbers: [
-                {
-                  primaryPhone: "",
-                  seondaryPhone: "",
-                },
-              ],
+              phoneNumbers: "",
               address: {
                 line1: "",
                 line2: "",
@@ -78,7 +73,7 @@ export default {
         lastName: { required, alpha },
         email: { email },
         address: {
-          city: { required },
+          city: {  },
         },
         phoneNumbers: [
           {
@@ -107,7 +102,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.firstName"
+                v-model="client.FirstName"
               />
               <span class="text-black" v-if="v$.client.firstName.$error">
                 <p
@@ -119,18 +114,6 @@ export default {
             </label>
           </div>
 
-          <!-- form field -->
-          <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">Middle Name</span>
-              <input
-                type="text"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
-                v-model="client.middleName"
-              />
-            </label>
-          </div>
 
           <!-- form field -->
           <div class="flex flex-col">
@@ -141,7 +124,7 @@ export default {
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
-                v-model="client.lastName"
+                v-model="client.LastName"
               />
               <span class="text-black" v-if="v$.client.lastName.$error">
                 <p
@@ -153,6 +136,21 @@ export default {
             </label>
           </div>
 
+
+          <!-- form field -->
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">organization</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                placeholder
+                v-model="client.organization"
+              />
+            </label>
+          </div>
+
+          
           <div></div>
           <!-- form field -->
           <div class="flex flex-col">
@@ -167,7 +165,7 @@ export default {
               <span class="text-black" v-if="v$.client.email.$error">
                 <p
                   class="text-red-700"
-                  v-for="error of v$.client.email.$errors"
+                  v-for="error of v$.client.Email.$errors"
                   :key="error.$uid"
                 >{{ error.$message }}!</p>
               </span>
@@ -194,7 +192,7 @@ export default {
             </label>
           </div>
           <!-- form field -->
-          <div class="flex flex-col">
+          <!-- <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Alternative Phone Number</span>
               <input
@@ -204,7 +202,7 @@ export default {
                 v-model="client.phoneNumbers[0].secondaryPhone"
               />
             </label>
-          </div>
+          </div> -->
         </div>
 
         <!-- grid container -->
@@ -217,7 +215,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.address.AddressLine1"
               />
             </label>
           </div>
@@ -228,7 +226,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line2"
+                v-model="client.address.AddressLine2"
               />
             </label>
           </div>
@@ -259,7 +257,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.county"
+                v-model="client.address.count"
               />
             </label>
           </div>
@@ -270,7 +268,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.zip"
+                v-model="client.address.ZipCode"
               />
             </label>
           </div>
