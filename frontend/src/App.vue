@@ -37,6 +37,10 @@
                 Find Event
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/chart">
+              Chart </router-link>
+            </li>
           </ul>
         </nav>
       </header>

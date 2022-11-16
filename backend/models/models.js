@@ -58,8 +58,7 @@ let eventDataSchema = new Schema({
     },
     organization: {  
         type: String,
-        ref: 'organizationData' ,
-        required: true
+        ref: 'organizationData'
    },
     services: {
         type: Array
