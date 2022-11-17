@@ -69,7 +69,7 @@ export default {
 
 <style>
 #_container {
-  background-color: #c8102e;
+  background-color: #674dff;
   color: white;
   padding: 18px;
 }
