@@ -51,8 +51,3 @@ const router = createRouter({
     history: createWebHistory(), routes
 })
 export default router
-
-
-    //     path: '/chart',
-    //     name: 'chart',
-    //     component: ChartView
