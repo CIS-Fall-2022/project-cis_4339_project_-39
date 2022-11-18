@@ -133,8 +133,9 @@ router.get("/totalAttendees", (req, res, next) => {
     pastdate.setMonth(currentmonth - 2)
     eventdata.aggregate([
        {$match: {date:{$gte:pastdate}}}, // filter query
-       {$project: {attendeeSize: {$size: "$attendees"}}},
-       {$group: {_id: null, totalAttendees: {$sum: "$attendeeSize"}}} // project query
+       {$project: {eventName: eventdata.eventName, attendeeSize: {$size: "$attendees"}}},
+    //    {$project: {NameOfEvent: {$gte: "$eventName"}}},
+       {$group: {_id: null, totalAttendees: {$sum: "$attendeeSize"} }} // project query
     ]).exec(
         (error, data) => {
             console.log(data)
