@@ -37,10 +37,10 @@
                 Find Event
               </router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link class="nav-link" to="/chart">
               Chart </router-link>
-            </li>
+            </li> -->
           </ul>
         </nav>
       </header>
@@ -69,7 +69,7 @@ export default {
 
 <style>
 #_container {
-  background-color: #c8102e;
+  background-color: #674dff;
   color: white;
   padding: 18px;
 }
