@@ -97,7 +97,11 @@ export default {
     },
     handleClientUpdate() {
       let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
-      axios.put(apiURL, this.client).then(() => {
+      const payload = {
+        ...this.client,
+        phoneNumbers: [String(this.client.phoneNumbers[0].primaryPhone), String(this.client.phoneNumbers[0].secondaryPhone)]
+        }
+      axios.put(apiURL, payload).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
           console.log(error);
