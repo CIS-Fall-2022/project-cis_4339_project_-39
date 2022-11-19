@@ -38,7 +38,7 @@ export default {
       const isFormCorrect = await this.v$.$validate();
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
-        let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata`;
+        let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData`;
         const payload = {
         ...this.client,
         phoneNumbers: [String(this.client.phoneNumbers[0].primaryPhone), String(this.client.phoneNumbers[0].secondaryPhone)]

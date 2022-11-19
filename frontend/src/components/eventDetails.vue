@@ -283,7 +283,7 @@ export default {
   beforeMount() {
     axios
       .get(
-        import.meta.env.VITE_ROOT_API + `/eventdata/id/${this.$route.params.id}`
+        import.meta.env.VITE_ROOT_API + `/eventsData/id/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data[0];
@@ -298,7 +298,7 @@ export default {
           axios
             .get(
               import.meta.env.VITE_ROOT_API +
-                `/primarydata/id/${this.attendeeIDs[i]}`
+                `/primaryData/id/${this.attendeeIDs[i]}`
             )
             .then((resp) => {
               let data = resp.data[0];
@@ -319,7 +319,7 @@ export default {
     },
     handleEventUpdate() {
       this.event.services = this.checkedServices;
-      let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
+      let apiURL = import.meta.env.VITE_ROOT_API + `/eventsData/${this.id}`;
       axios.put(apiURL, this.event).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
@@ -328,7 +328,7 @@ export default {
       });
     },
     handleEventDelete() {
-      let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
+      let apiURL = import.meta.env.VITE_ROOT_API + `/eventsData/${this.id}`;
       axios.delete(apiURL).then(() => {
         alert("Event has beeen Deleted.");
         this.$router.back().catch((error) => {

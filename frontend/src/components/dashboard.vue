@@ -112,7 +112,7 @@ export default {
     };
   },
   mounted() {
-    let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/`;
+    let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/`;
     console.log(apiURL)
     axios.get(apiURL).then((resp) => {
       this.queryData = resp.data;
@@ -125,11 +125,11 @@ export default {
       if (this.searchBy === "Client Name") {
         apiURL =
           import.meta.env.VITE_ROOT_API +
-          `/primarydata/search/?firstName=${this.firstName}&lastName=${this.lastName}&searchBy=name`;
+          `/primaryData/search/?firstName=${this.firstName}&lastName=${this.lastName}&searchBy=name`;
       } else if (this.searchBy === "Client Number") {
         apiURL =
           import.meta.env.VITE_ROOT_API +
-          `/primarydata/search/?phoneNumbers.primaryPhone=${this.phoneNumber}&searchBy=number`;
+          `/primaryData/search/?phoneNumbers.primaryPhone=${this.phoneNumber}&searchBy=number`;
       }
       axios.get(apiURL).then((resp) => {
         this.queryData = resp.data;
@@ -143,7 +143,7 @@ export default {
       this.phoneNumber = "";
 
       //get all entries
-      let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/`;
+      let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/`;
       axios.get(apiURL).then((resp) => {
         this.queryData = resp.data;
       });

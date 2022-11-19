@@ -45,7 +45,7 @@ let primaryDataSchema = new Schema({
     }
 },
 {
-    collection: 'primarydata',
+    collection: 'primaryData',
     timestamps: true
 });
 
