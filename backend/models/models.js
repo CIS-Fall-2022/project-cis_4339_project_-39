@@ -15,8 +15,8 @@ let primaryDataSchema = new Schema({
     },
     organization: {  
         type: String,
-        ref: 'organizationData' ,
-        required: true
+        ref: 'organizationData' 
+        
 }, 
     email: {
         type: String
