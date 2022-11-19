@@ -113,6 +113,7 @@ export default {
   },
   mounted() {
     let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/`;
+    console.log(apiURL)
     axios.get(apiURL).then((resp) => {
       this.queryData = resp.data;
     });
