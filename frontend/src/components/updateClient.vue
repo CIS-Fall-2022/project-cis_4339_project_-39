@@ -104,18 +104,18 @@ export default {
       axios.put(apiURL, payload).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
-          console.log(error);
+          alert(error.message);
         });
-      });
+      }).catch(error=>alert(error.message));
     },
     handleClientDelete() {
       let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/${this.id}`;
       axios.delete(apiURL, this.client).then(() => {
         alert("Client has been deleted.");
         this.$router.back().catch((error) => {
-          console.log(error);
+          alert(error.message);
         });
-      });
+      }).catch(error=>alert(error.message));
     },
     addToEvent() {
       this.eventsChosen.forEach((event) => {
