@@ -4,10 +4,10 @@ const router = express.Router();
 //importing data model schemas
 let { organizationdata } = require("../models/models"); 
 
-//GET organization by name
-router.get("/:name", (req, res, next) => { 
+//GET organization by ID
+router.get("/", (req, res, next) => { 
     organizationdata.findOne( 
-        {organizationName:req.params.name},
+        {id:process.env.ORGANIZATION},
         (error, data) => {
             if (error) {
                 return next(error);
@@ -19,17 +19,17 @@ router.get("/:name", (req, res, next) => {
 });
 
 //GET all organization entries
-router.get("/", (req, res, next) => { 
-    organizationdata.find( 
-        (error, data) => {
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
-            }
-        }
-    ).sort({ 'organizationName': -1 }).limit(10)
-});
+// router.get("/", (req, res, next) => { 
+//     organizationdata.find( 
+//         (error, data) => {
+//             if (error) {
+//                 return next(error);
+//             } else {
+//                 res.json(data);
+//             }
+//         }
+//     ).sort({ 'organizationName': -1 }).limit(10)
+// });
 
 //POST create a orgainzation
 router.post("/", (req, res, next) => { 

@@ -75,7 +75,7 @@
             <tr @click="editEvent(event._id)" v-for="event in queryData" :key="event._id">
               <td class="p-2 text-left">{{ event.eventName }}</td>
               <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
-              <td class="p-2 text-left">{{ event.address.line1 }}</td>
+              <td class="p-2 text-left">{{ event.address?.line1??""}}</td>
             </tr>
           </tbody>
         </table>
@@ -98,7 +98,7 @@ export default {
     };
   },
   mounted() {
-    let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/`;
+    let apiURL = import.meta.env.VITE_ROOT_API + `/eventsData/`;
     this.queryData = [];
     axios.get(apiURL).then((resp) => {
       this.queryData = resp.data;
@@ -114,11 +114,11 @@ export default {
       if (this.searchBy === "Event Name") {
         apiURL =
           import.meta.env.VITE_ROOT_API +
-          `/eventdata/search/?eventName=${this.eventName}&searchBy=name`;
+          `/eventsData/search/?eventName=${this.eventName}&searchBy=name`;
       } else if (this.searchBy === "Event Date") {
         apiURL =
           import.meta.env.VITE_ROOT_API +
-          `/eventdata/search/?eventDate=${this.eventDate}&searchBy=date`;
+          `/eventsData/search/?eventDate=${this.eventDate}&searchBy=date`;
       }
       axios.get(apiURL).then((resp) => {
         this.queryData = resp.data;
@@ -131,7 +131,7 @@ export default {
       this.eventDate = "";
 
       //get all entries
-      let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/`;
+      let apiURL = import.meta.env.VITE_ROOT_API + `/eventsData/`;
       this.queryData = [];
       axios.get(apiURL).then((resp) => {
         this.queryData = resp.data;
