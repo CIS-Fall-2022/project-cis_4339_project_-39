@@ -7,6 +7,7 @@ let { eventdata } = require("../models/models");
 //GET all entries
 router.get("/", (req, res, next) => { 
     eventdata.find( 
+        {organization:process.env.ORGANIZATION},
         (error, data) => {
             if (error) {
                 return next(error);
@@ -67,8 +68,9 @@ router.get("/client/:id", (req, res, next) => {
 
 //POST
 router.post("/", (req, res, next) => { 
+    const newbody={...req.body,organization:process.env.ORGANIZATION}
     eventdata.create( 
-        req.body, 
+        newbody, 
         (error, data) => { 
             if (error) {
                 return next(error);
@@ -132,9 +134,26 @@ router.get("/totalAttendees", (req, res, next) => {
     const pastdate = new Date(currentdate)
     pastdate.setMonth(currentmonth - 2)
     eventdata.aggregate([
-       {$match: {date:{$gte:pastdate}}}, // filter query
-       {$project: {attendeeSize: {$size: "$attendees"}}},
-       {$group: {_id: null, totalAttendees: {$sum: "$attendeeSize"}}} // project query
+        {$match: {date:{$gte:pastdate}, organization: process.env.ORGANIZATION}}, // filter query
+        {
+      $project: {
+        attendeeSize: {
+          $size: "$attendees"
+        },
+        eventName: 1
+      }
+    },
+    {
+      $group: {
+        _id: "$_id",
+        totalAttendees: {
+          $sum: "$attendeeSize"
+        },
+        eventName: {
+          $first: "$eventName"
+        }
+      }
+    }
     ]).exec(
         (error, data) => {
             console.log(data)

@@ -4,7 +4,7 @@
     <div class="columns">
       <div class="column">
         <h3>Planet Chart Demo</h3>
-        <PlanetChart />
+        <BarChart :labels="labels" :attendees="attendees" />
       </div>
       <div class="column">
         <h3>Bar Chart - Receiving Data from backend</h3>
@@ -50,34 +50,31 @@
   </section>
 </template>
 
-<script>
-import axios from "axios";
-import PlanetChart from "@/components/PlanetChart.vue";
-import EnrollmentBar from "@/components/BarChartComponent.vue";
 
+<script>
+import BarChart from "./barChart";
+import axios from "axios";
 export default {
+  name: "ChartView",
   components: {
-    PlanetChart,
-    EnrollmentBar,
+    BarChart,
   },
   data() {
     return {
       labels: [],
-      enrolled: [],
-      loading: false,
-      error: null,
+      attendees: [],
     };
-  },
-  methods: {
+  }, methods: {
     async fetchData() {
       try {
         this.error = null;
         this.loading = true;
-        const url = `http://localhost:3000/eventsData/totalAttendees`;
+        const url =import.meta.env.VITE_ROOT_API + `/eventsData/totalAttendees`;
         const response = await axios.get(url);
         //"re-organizing" - mapping json from the response
-        this.labels = response.data.map((item) => item.eventName);
-        this.enrolled = response.data.map((item) => item.enrollment);
+        console.log(response)
+        this.labels = response.data.map((item) => item["eventName"]);
+        this.attendees = response.data.map((item) => item["totalAttendees"]);
       } catch (err) {
         if (err.response) {
           // client received an error response (5xx, 4xx)
@@ -102,8 +99,11 @@ export default {
       this.loading = false;
     },
   },
+  
   mounted() {
-    this.fetchData();
+    // call the totalAttendees endpoint
+    this.fetchData()
   },
 };
 </script>
+

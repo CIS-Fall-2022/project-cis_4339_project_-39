@@ -4,6 +4,9 @@
     <div>
       <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Dashboard</h1>
     </div>
+    <div>
+      <ChartViewVue/>
+    </div>
     <div class="px-10 pt-20">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
         <h2 class="text-2xl font-bold">Search Client By</h2>
@@ -87,8 +90,8 @@
           <tbody class="divide-y divide-gray-300">
             <tr @click="editClient(client._id)" v-for="client in queryData" :key="client._id">
               <td class="p-2 text-left">{{ client.firstName + " " + client.lastName }}</td>
-              <td class="p-2 text-left">{{ event.eventName }}</td>
-              <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
+              <td class="p-2 text-left">{{ event?.eventName??"unknown"}}</td>
+              <td class="p-2 text-left">{{ formattedDate(event?.date) }}</td>
             </tr>
           </tbody>
         </table>
@@ -98,8 +101,10 @@
 </template>
 <script>
 import axios from "axios";
-
+import ChartViewVue from "../views/ChartView.vue";
+import { DateTime } from "luxon";
 export default {
+  components:{ChartViewVue},
   data() {
     return {
       queryData: [],
@@ -108,6 +113,7 @@ export default {
       firstName: "",
       lastName: "",
       phoneNumber: "",
+      event:{}
     };
   },
   mounted() {
@@ -119,6 +125,9 @@ export default {
     window.scrollTo(0, 0);
   },
   methods: {
+    formattedDate(datetimeDB) {
+      return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
+    },
     handleSubmitForm() {
       let apiURL = "";
       if (this.searchBy === "Client Name") {
