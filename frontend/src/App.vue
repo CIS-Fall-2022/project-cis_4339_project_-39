@@ -65,20 +65,20 @@
 import axios from "axios";
 export default {
   name: "App",
-  // data() {
-  // 	return {
-  //     organizationName: ""
-  //   }
-  // },
-  // mounted() {
-  //   let apiURL = import.meta.env.VITE_ROOT_API + `/organizationData/`;
-  //   axios.get(apiURL).then((resp) => {
-  //     const result = resp.data;
-  //     // if no organization is found use 'DataPlatform' as default
-  //     this.organizationName = result.organizationName ?? 'DataPlatform'
-  //   });
-  //   window.scrollTo(0, 0);
-  // }
+  data() {
+  	return {
+      organizationName: ""
+    }
+  },
+  mounted() {
+    let apiURL = import.meta.env.VITE_ROOT_API + `/organizationData/`;
+    axios.get(apiURL).then((resp) => {
+      const result = resp.data;
+      // if no organization is found use 'DataPlatform' as default
+      this.organizationName = result.organizationName ?? 'DataPlatform'
+    });
+    
+  }
 };
 </script>
 

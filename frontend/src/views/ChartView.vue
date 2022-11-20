@@ -1,51 +1,11 @@
 <template>
   <section class="container">
-    <h1>Chart Examples</h1>
+    
     <div class="columns">
       <div class="column">
-        <h3>Planet Chart Demo</h3>
         <BarChart :labels="labels" :attendees="attendees" />
       </div>
-      <div class="column">
-        <h3>Bar Chart - Receiving Data from backend</h3>
-        <div>
-          <div>
-            <EnrollmentBar
-              v-if="!loading && !error"
-              :label="labels"
-              :chart-data="enrolled"
-            ></EnrollmentBar>
-
-            <!-- Start of loading animation -->
-            <div class="mt-40" v-if="loading">
-              <p
-                class="
-                  text-6xl
-                  font-bold
-                  text-center text-gray-500
-                  animate-pulse
-                "
-              >
-                Loading...
-              </p>
-            </div>
-            <!-- End of loading animation -->
-
-            <!-- Start of error alert -->
-            <div class="mt-12 bg-red-50" v-if="error">
-              <h3 class="px-4 py-1 text-4xl font-bold text-white bg-red-800">
-                {{ error.title }}
-              </h3>
-              <p class="p-4 text-lg font-bold text-red-900">
-                {{ error.message }}
-              </p>
-            </div>
-            <!-- End of error alert -->
-            <br />
-            <br />
-          </div>
-        </div>
-      </div>
+     
     </div>
   </section>
 </template>
@@ -73,8 +33,15 @@ export default {
         const response = await axios.get(url);
         //"re-organizing" - mapping json from the response
         console.log(response)
-        this.labels = response.data.map((item) => item["eventName"]);
-        this.attendees = response.data.map((item) => item["totalAttendees"]);
+        const labels = response.data.map((item) => item["eventName"]);
+        const attendees = response.data.map((item) => item["totalAttendees"]);
+
+        for (const i in labels) {
+          this.labels[i] = labels[i]
+        }
+        for (const i in attendees) {
+          this.attendees[i] = attendees[i]
+        }
       } catch (err) {
         if (err.response) {
           // client received an error response (5xx, 4xx)
