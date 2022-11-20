@@ -49,7 +49,7 @@
       <section
         class="justify-end items-center h-24 flex"
         style="
-          background: linear-gradient(250deg, #C8102E 70%, #efecec 50.6%);
+          background: linear-gradient(250deg, #674dff 70%, #efecec 50.6%);
         "
       >
         <h1 class="mr-20 text-3xl text-white">{{organizationName}}</h1>
