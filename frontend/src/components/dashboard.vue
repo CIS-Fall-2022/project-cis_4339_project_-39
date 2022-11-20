@@ -88,7 +88,7 @@
           <tbody class="divide-y divide-gray-300">
             <tr @click="editEvent(query._id)" v-for="query in queryData" :key="query._id">
               <td class="p-2 text-left">{{ query?.eventName??"unknown"}}</td>
-              <td class="p-2 text-left">{{ query?.totalAttendees??0 }}</td>
+              <td class="p-2 text-left">{{ query?.attendees??0 }}</td>
             </tr>
           </tbody>
         </table>
